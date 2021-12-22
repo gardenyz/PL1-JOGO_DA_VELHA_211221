@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Jogo Da Velha</title>
+    <style type="text/css">
+        body {
+            background-color: black;
+        }
+
+        .one {
+            margin: 100px auto;
+            border: 3px hidden;
+            text-align: center;
+            padding: 20px;
+            background-color: rgb(8, 102, 102);
+            border-radius: 10px;
+
+        }
+
+        th {
+            font-size: 25pt;
+            height: 50px;
+        }
+
+        .tabuleiro {
+            width: 85px;
+            height: 75px;
+            background-color: cadetblue;
+            border-radius: 3px;
+            text-align: center;
+        }
+    </style>
+
+    <script language="Javascript">
+
+        var tabuleiro, letra, ind, x, y;
+        tabuleiro = new Array();
+
+        for (ind = 0; ind < 3; ind++) {
+            tabuleiro[ind] = new Array(3);
+        }
+        for (x = 0; x < 3; x++) {
+            for (y = 0; y < 3; y++) {
+                tabuleiro[x][y] = 0;
+            }
+        }
+        letra = "img/X.png";
+        var vencedor = "";
+
+        function game(i, lin, col) {
+            var celulaclicada;
+
+            celulaclicada = tabuleiro[lin][col];
+            if (celulaclicada == 1 || celulaclicada == -1) {
+                alert("Opa, este quadrado já foi escolhido!");
+            }
+            else {
+                document.getElementById("id" + i).setAttribute("src", letra);
+                if (letra == "img/X.png") {
+                    vencedor = "1";
+                    tabuleiro[lin][col] = 1;
+                    letra = "img/O.png";
+                }
+                else {
+                    tabuleiro[lin][col] = -1;
+                    letra = "img/X.png";
+                    vencedor = "2";
+                }
+            }
+        }
+        function verif() {
+            var i, soma;
+
+            c11 = tabuleiro[0][0];
+            c12 = tabuleiro[0][1];
+            c13 = tabuleiro[0][2];
+            c21 = tabuleiro[1][0];
+            c22 = tabuleiro[1][1];
+            c23 = tabuleiro[1][2];
+            c31 = tabuleiro[2][0];
+            c32 = tabuleiro[2][1];
+            c33 = tabuleiro[2][2];
+
+            if (((c11 != 0) && (c12 != 0) && (c13 != 0) && (c11 == c12) && (c12 == c13)) ||
+                ((c11 != 0) && (c22 != 0) && (c33 != 0) && (c11 == c22) && (c22 == c33)) ||
+                ((c11 != 0) && (c21 != 0) && (c31 != 0) && (c11 == c21) && (c21 == c31)) ||
+                ((c21 != 0) && (c22 != 0) && (c23 != 0) && (c21 == c22) && (c22 == c23)) ||
+                ((c31 != 0) && (c32 != 0) && (c33 != 0) && (c31 == c32) && (c32 == c33)) ||
+                ((c12 != 0) && (c22 != 0) && (c32 != 0) && (c12 == c22) && (c22 == c32)) ||
+                ((c13 != 0) && (c23 != 0) && (c33 != 0) && (c13 == c23) && (c23 == c33)) ||
+                ((c31 != 0) && (c22 != 0) && (c13 != 0) && (c31 == c22) && (c22 == c13))) {
+                alert(" Parabéns Jogador " + vencedor + ", VOCÊ GANHOU!!");
+            }
+
+        }
+
+
+    </script>
+</head>
+
+<body>
+
+    <table class="one">
+        <form>
+            <th>Jogo da Velha </th>
+            <tr>
+                <td>
+                    <table class="two">
+                        <script language="Javascript">
+                            var l, c, pos;
+                            pos = 0;
+                            for (l = 0; l < 3; l++) {
+                                document.write("<tr>");
+                                for (c = 0; c < 3; c++) {
+                                    document.write("<td class='tabuleiro'>");
+                                    document.write("<img  id ='id" + pos + "' width='85' height='75' " +
+                                        "onclick='{game(" + pos + "," + l + "," + c + ")};{verif();}'>");
+                                    document.write("</td>");
+                                    pos++;
+                                }
+                                document.write("</tr>");
+                            }
+                        </script>
+
+                    </table>
+                </td>
+            </tr>
+        </form>
+        <p id="resultado"></p>
+    </table>
+
+</body>
+
+</html>
